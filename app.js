@@ -52,17 +52,17 @@ app.use(express.static(path.join(__dirname, "/public")));
 //     res.send("Hi, i am root!");
 // });
 
-const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    crypto: {
-        secret: process.env.SECRET
-    },
-    touchAfter: 24 * 60 * 60
-})
+// const store = MongoStore.create({
+//     mongoUrl: dbUrl,
+//     crypto: {
+//         secret: process.env.SECRET
+//     },
+//     touchAfter: 24 * 60 * 60
+// })
 
-store.on("error", () => {
-    console.log("ERROR IN MONGO STORE");
-})
+// store.on("error", () => {
+//     console.log("ERROR IN MONGO STORE");
+// })
 
 
 // // console.log("SECRET =", process.env.SECRET);
