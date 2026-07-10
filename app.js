@@ -67,7 +67,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 // // console.log("SECRET =", process.env.SECRET);
 const sessionOptions = {
-    store,
+   // store,
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
