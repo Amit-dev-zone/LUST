@@ -16,32 +16,31 @@
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea name="listing[description]" class="form-control" required>
-        <%= listing.description %></textarea>
+        <textarea name="listing[description]" class="form-control" required><%= listing.description %></textarea>
         <div class="invalid-feedback">Please enter a short description.</div>
       </div>
 
+      <% if(originalImageUrl) { %>
       <div class="mb-3">
         Original Listing Image <br>
-        <img src="<%= listing.image.url %>" style="width: 300px; height: 200px; object-fit: cover;" alt="Listing Image" >
-        <!-- <img src = "<%= originalImageUrl %>"> -->
+        <img src="<%= originalImageUrl %>" class="img-fluid rounded" style="max-width: 300px;" alt="Listing Image">
       </div>
+      <% } %>
 
       <div class="mb-3">
-        <label for="Image" class="form-label">Image Link</label>
+        <label for="image" class="form-label">Upload New Image</label>
         <input
-          name="listing[image][url]"
+          name="listing[image]"
           type="file"
           class="form-control"
         />
-        
       </div>
       <div class="row">
         <div class="mb-3 col-md-4">
           <label for="price" class="form-label">Price</label>
           <input
             name="listing[price]"
-            placeholder="<%= listing.price %>"
+            value="<%= listing.price %>"
             type="number"
             class="form-control"
             required
@@ -53,7 +52,7 @@
           <label for="country" class="form-label">Country</label>
           <input
             name="listing[country]"
-            placeholder="India"
+            value="<%= listing.country %>"
             type="text"
             class="form-control"
             required
@@ -65,7 +64,7 @@
         <label for="location" class="form-label">Location </label>
         <input
           name="listing[location]"
-          placeholder="Enter location"
+          value="<%= listing.location %>"
           type="text"
           class="form-control"
           required

@@ -19,10 +19,9 @@ module.exports.signUpController = async(req, res, next) => {
 }
 
 module.exports.loginController = async(req, res) => {
-    // Login logic here
-    
-    req.flash("success", "Welcome back to Wanderlust");
-    res.redirect("/listings");
+    req.flash("success", "Welcome back to Wanderlust!");
+    let redirectUrl = res.locals.redirectUrl || "/listings";
+    res.redirect(redirectUrl);
 }
 
 module.exports.logoutController = (req, res, next) => {
