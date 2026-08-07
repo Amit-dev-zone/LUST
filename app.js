@@ -27,20 +27,31 @@ const PORT = process.env.PORT || 8080;
 app.set("trust proxy", 1);
 
 async function main() {
+    if (process.env.NODE_ENV === "production" && !process.env.ATLASDB_URL) {
+        console.error("FATAL ERROR: ATLASDB_URL environment variable is not set in Render!");
+        process.exit(1);
+    }
+
     try {
         await mongoose.connect(dbUrl, { serverSelectionTimeoutMS: 5000 });
-        console.log("Connected to MongoDB Atlas");
+        console.log("Connected to MongoDB Database");
     } catch (e) {
-        console.log("Atlas connection failed, falling back to local MongoDB:", e.message);
-        await mongoose.connect(LOCAL_DB);
-        console.log("Connected to local MongoDB");
+        if (process.env.NODE_ENV !== "production") {
+            console.log("Atlas connection failed, falling back to local MongoDB:", e.message);
+            await mongoose.connect(LOCAL_DB);
+            console.log("Connected to local MongoDB");
+        } else {
+            console.error("MongoDB Atlas connection failed in production:", e.message);
+            throw e;
+        }
     }
 }
 
 main().then(() => {
     startServer();
 }).catch((e) => {
-    console.log("MongoDB connection error:", e);
+    console.error("MongoDB connection error:", e.message);
+    process.exit(1);
 });
 
 app.set("view engine", "ejs");
