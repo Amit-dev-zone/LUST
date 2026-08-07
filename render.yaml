@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: wanderlust
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ATLASDB_URL
+        sync: false
+      - key: SECRET
+        generateValue: true
+      - key: CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

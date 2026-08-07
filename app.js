@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV != "production" ){
+if (process.env.NODE_ENV !== "production") {
     require("dotenv").config({ quiet: true });
 }
 
@@ -10,7 +10,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
-const { MongoStore } = require('connect-mongo');
+const { MongoStore } = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -22,6 +22,9 @@ const userRouter = require("./routes/user.js");
 
 const dbUrl = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/wonderlust";
 const LOCAL_DB = "mongodb://127.0.0.1:27017/wonderlust";
+const PORT = process.env.PORT || 8080;
+
+app.set("trust proxy", 1);
 
 async function main() {
     try {
@@ -42,9 +45,9 @@ main().then(() => {
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.engine('ejs', ejsMate);
+app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 function startServer() {
@@ -90,22 +93,24 @@ function startServer() {
     });
 
     app.get("/", (req, res) => {
-        res.send("Welcome to Wonderlust! Please visit /listings to see all listings.");
-    })
+        res.redirect("/listings");
+    });
+
     app.use("/listings", listingRouter);
     app.use("/listings/:id/reviews", reviewRouter);
     app.use("/", userRouter);
 
-    app.all("/*splat", (req, res, next) => { 
-       next(new ExpressError(404, "Page not found!"));
+    app.use((req, res, next) => {
+        next(new ExpressError(404, "Page not found!"));
     });
 
     app.use((err, req, res, next) => {
-        let {statusCode=500, message="Something went wrong"} = err;
-        res.status(statusCode).render("error.ejs", {err});
+        let { statusCode = 500, message = "Something went wrong" } = err;
+        res.status(statusCode).render("error.ejs", { err });
     });
 
-    app.listen(8080, () => {
-        console.log("Server is listening on port 8080");
+    app.listen(PORT, () => {
+        console.log(`Server is listening on port ${PORT}`);
     });
 }
+
