@@ -80,23 +80,36 @@
 
     <div class="col-12 mt-3 mb-3">
       <h3>Where you'll be</h3>
-      <div id="map" style="width: 100%; height: 300px; border-radius: 10px;"></div>
+      <div id="map" style="width: 100%; height: 350px; border-radius: 12px; z-index: 1;"></div>
     </div>
   </div>
 </div>
 
 <script>
-  let maptoken = "<%= mapToken %>";
-  if (maptoken && typeof mapboxgl !== "undefined") {
-    mapboxgl.accessToken = maptoken;
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-71.06776, 42.35816],
-      zoom: 9
-    });
-    new mapboxgl.Marker({ color: 'red' })
-      .setLngLat([-71.06776, 42.35816])
-      .addTo(map);
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    const locationName = "<%= listing.location %>, <%= listing.country %>";
+    const map = L.map('map').setView([20.5937, 78.9629], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(locationName))
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const lat = parseFloat(data[0].lat);
+          const lon = parseFloat(data[0].lon);
+          map.setView([lat, lon], 12);
+          L.marker([lat, lon]).addTo(map)
+            .bindPopup('<b><%= listing.title %></b><br>' + locationName)
+            .openPopup();
+        } else {
+          L.marker([20.5937, 78.9629]).addTo(map)
+            .bindPopup('<b><%= listing.title %></b><br>' + locationName);
+        }
+      })
+      .catch(err => console.log('Geocoding error:', err));
+  });
 </script>

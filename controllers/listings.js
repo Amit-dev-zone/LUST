@@ -1,8 +1,24 @@
 const Listing = require("../models/listing.js");
 
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", {allListings});
+    const { q } = req.query;
+    let query = {};
+    if (q && q.trim() !== "") {
+        const searchRegex = new RegExp(q.trim(), "i");
+        query = {
+            $or: [
+                { title: searchRegex },
+                { location: searchRegex },
+                { country: searchRegex },
+                { description: searchRegex }
+            ]
+        };
+    }
+    const allListings = await Listing.find(query);
+    if (q && allListings.length === 0) {
+        req.flash("error", `No listings found for "${q}"`);
+    }
+    res.render("listings/index.ejs", { allListings, searchQuery: q || "" });
 };
 
 module.exports.newController = (req, res) => {
@@ -33,6 +49,11 @@ module.exports.createController = async(req, res) => {
         let url = req.file.path;
         let filename = req.file.filename;
         newListing.image = {url, filename};
+    } else if (!newListing.image || !newListing.image.url) {
+        newListing.image = {
+            filename: "defaultlistingimage",
+            url: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=800&q=60"
+        };
     }
     await newListing.save();
     req.flash("success", "Successfully created a new listing!");
@@ -48,7 +69,7 @@ module.exports.editController = async (req, res) => {
     }
     
     let originalImageUrl = listing.image ? listing.image.url : "";
-    if (originalImageUrl) {
+    if (originalImageUrl && originalImageUrl.includes("/upload")) {
         originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
     }
     res.render("listings/edit.ejs", { listing, originalImageUrl });
@@ -56,7 +77,11 @@ module.exports.editController = async (req, res) => {
 
 module.exports.updateController = async(req, res) => {
     let {id} = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing }, { new: true });
+    if(!listing){
+        req.flash("error", "Listing you requested for does not exist!");
+        return res.redirect("/listings");
+    }
 
     if(typeof req.file !== "undefined"){
         let url = req.file.path;
@@ -73,4 +98,4 @@ module.exports.deleteController = async(req, res) => {
     await Listing.findByIdAndDelete(id);
     req.flash("success", "Successfully deleted the listing!");
     res.redirect("/listings");
-};
+};
