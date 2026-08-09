@@ -25,18 +25,29 @@
       </div>
 
       <div class="search-container mx-auto my-2 my-md-0">
-        <form class="d-flex position-relative" action="/listings" method="GET" role="search">
+        <form class="d-flex position-relative align-items-center" action="/listings" method="GET" role="search" id="navbarSearchForm">
           <input 
             class="form-control search-inp" 
             type="search" 
             name="q" 
+            id="searchInput"
             value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
             placeholder="Search destinations, beachfront villas, cabins..." 
             aria-label="Search destinations"
             autocomplete="off"
           >
-          <button class="btn btn-search" type="submit" aria-label="Submit search" title="Search">
-            <i class="fa-solid fa-magnifying-glass"></i>
+          
+          <span class="search-shortcut-badge d-none d-xl-inline-block" title="Press / to search">/</span>
+
+          <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+            <button class="btn btn-search-clear" type="button" id="clearSearchBtn" title="Clear search" aria-label="Clear search">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          <% } %>
+
+          <button class="btn btn-search" type="submit" aria-label="Submit search" title="Search stays">
+            <i class="fa-solid fa-magnifying-glass btn-search-icon"></i>
+            <span class="btn-search-text d-none d-lg-inline-block">Search</span>
           </button>
         </form>
       </div>

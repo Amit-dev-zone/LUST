@@ -40,6 +40,26 @@
     });
   }
 
+  // Keyboard shortcut '/' to focus search input
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    // Clear search button functionality
+    const clearBtn = document.getElementById('clearSearchBtn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        window.location.href = '/listings';
+      });
+    }
+  }
+
   // Auto Dismiss Flash Alerts after 6 seconds
   const alerts = document.querySelectorAll('.alert-custom');
   alerts.forEach(alert => {
