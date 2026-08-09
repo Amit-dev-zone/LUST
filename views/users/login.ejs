@@ -1,19 +1,45 @@
 <% layout('/layouts/boilerplate') -%>
-<div class="row mt-3">
-    <h1 class="col-6 offset-3">Login to Wanderlust</h1>
-    <div class="col-6 offset-3">
+
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-5 mx-auto">
+      <div class="form-card">
+        <div class="text-center mb-4">
+          <div class="d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger rounded-circle p-3 mb-3">
+            <i class="fa-solid fa-right-to-bracket fs-2"></i>
+          </div>
+          <h2 class="form-header-title">Welcome Back</h2>
+          <p class="form-header-subtitle">Log in to Wanderlust to manage your stays & reviews</p>
+        </div>
+
         <form action="/login" method="POST" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input name="username" placeholder="Enter your username" type="text" class="form-control" required>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-regular fa-user"></i></span>
+              <input name="username" id="username" placeholder="Enter your username" type="text" class="form-control" required>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input name="password" placeholder="Enter your password" type="password" class="form-control" required>
+            <div class="invalid-feedback">Please enter your username.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+              <input name="password" id="password" placeholder="Enter your password" type="password" class="form-control" required>
             </div>
-            <button class="btn btn-dark add-btn">Login</button>
+            <div class="invalid-feedback">Please enter your password.</div>
+          </div>
+
+          <button class="btn btn-form-submit py-3 mb-3">
+            <i class="fa-solid fa-right-to-bracket me-2"></i> Log In
+          </button>
+
+          <div class="text-center">
+            <p class="text-muted fs-6 mb-0">Don't have an account? <a href="/signup" class="text-danger fw-bold text-decoration-underline">Sign Up</a></p>
+          </div>
         </form>
+      </div>
     </div>
+  </div>
 </div>
-    
-    

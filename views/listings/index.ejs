@@ -1,123 +1,204 @@
 <% layout('/layouts/boilerplate') -%>
-<style>
-.filters {
-    display: flex;
-    flex-direction: row;   /* Default, can be omitted */
-    gap: 2rem;             /* Space between filters */
-    align-items: center;
-    overflow-x: auto;
-}
 
-.filter {
-    display: flex;
-    flex-direction: column; /* Icon above text */
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
-    opacity: 0.7;
-}
-
-.filter:hover {
-    opacity: 1;
-    cursor: pointer;
-}
-
-.tax-toggle {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 10px 18px;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-
-    background-color: #f8f9fa;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-
-    width: fit-content;
-    cursor: pointer;
-
-    transition: all 0.3s ease;
-}
-
-.tax-toggle:hover {
-    background-color: #ffffff;
-    border-color: #428afe;
-    box-shadow: 0 4px 10px rgba(66, 138, 254, 0.2);
-}
-</style>
-<div class="filters">
-    <div class="filter">
-        <div><i class="fa-solid fa-fire"></i></div>
-        <p>Trending</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-bed"></i></div>
-        <p>Rooms</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-mountain"></i></div>
-        <p>Mountains</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-city"></i></div>
-        <p>Iconic Cities</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-brands fa-fort-awesome"></i></div>
-        <p>Castles</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-umbrella-beach"></i></div>
-        <p>Beaches</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-igloo"></i></div>
-        <p>Arctic</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
-        <p>Mount City</p>
-    </div>
-    <div class="tax-toggle">
-        <div class="form-check-reverse form-switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Display Taxes</label>
+<!-- Hero Section (Shown on default index view) -->
+<% if (typeof searchQuery === 'undefined' || !searchQuery) { %>
+<div class="container-fluid px-lg-4 mt-2">
+  <div class="hero-wrapper">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-bg-glow-2"></div>
+    <div class="row align-items-center">
+      <div class="col-12 col-lg-8">
+        <div class="hero-badge">
+          <i class="fa-solid fa-sparkles text-warning"></i> Over 10,000+ Verified Stays Worldwide
         </div>
+        <h1 class="hero-title">
+          Find Your Next <span class="text-gradient">Dream Stay</span> & Unique Experience
+        </h1>
+        <p class="hero-subtitle">
+          Explore luxury villas, cozy beachfront cottages, iconic city apartments, and hidden nature retreats carefully curated for unforgettable memories.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">10K+</span>
+            <span class="stat-label">Verified Stays</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">4.9/5</span>
+            <span class="stat-label">Guest Rating</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">120+</span>
+            <span class="stat-label">Countries</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">Host Support</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+<% } %>
+
+<!-- Category Filters Carousel Bar -->
+<div class="container-fluid px-lg-4">
+  <div class="filters-wrapper">
+    <div class="filters-container">
+      <div class="filters" id="categoryFilters">
+        <div class="filter-item active" data-category="trending">
+          <i class="fa-solid fa-fire"></i>
+          <span>Trending</span>
+        </div>
+        <div class="filter-item" data-category="rooms">
+          <i class="fa-solid fa-bed"></i>
+          <span>Rooms</span>
+        </div>
+        <div class="filter-item" data-category="cities">
+          <i class="fa-solid fa-mountain-city"></i>
+          <span>Iconic Cities</span>
+        </div>
+        <div class="filter-item" data-category="mountains">
+          <i class="fa-solid fa-mountain"></i>
+          <span>Mountains</span>
+        </div>
+        <div class="filter-item" data-category="castles">
+          <i class="fa-brands fa-fort-awesome"></i>
+          <span>Castles</span>
+        </div>
+        <div class="filter-item" data-category="beaches">
+          <i class="fa-solid fa-umbrella-beach"></i>
+          <span>Beaches</span>
+        </div>
+        <div class="filter-item" data-category="pools">
+          <i class="fa-solid fa-person-swimming"></i>
+          <span>Amazing Pools</span>
+        </div>
+        <div class="filter-item" data-category="camping">
+          <i class="fa-solid fa-campground"></i>
+          <span>Camping</span>
+        </div>
+        <div class="filter-item" data-category="farms">
+          <i class="fa-solid fa-cow"></i>
+          <span>Farms</span>
+        </div>
+        <div class="filter-item" data-category="arctic">
+          <i class="fa-solid fa-snowflake"></i>
+          <span>Arctic</span>
+        </div>
+        <div class="filter-item" data-category="new">
+          <i class="fa-solid fa-key"></i>
+          <span>New</span>
+        </div>
+      </div>
+
+      <div class="tax-toggle-pill ms-auto">
+        <div class="form-check form-switch m-0 d-flex align-items-center gap-2">
+          <input class="form-check-input mt-0" type="checkbox" id="flexSwitchCheckDefault" role="switch">
+          <label class="form-check-label user-select-none" for="flexSwitchCheckDefault">Display total before taxes</label>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-    <% for(let listing of allListings) { %>
-    <a href="/listings/<%= listing._id %>" class="listing-link">
-        <div class="card col listing-card" style="width: 22rem;">
-            <img src="<%= (listing.image && listing.image.url) ? listing.image.url : '' %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
-            <div class="card-img-overlay"></div>
-            <div class="card-body">
-                <p class="card-text">
-                    <b><%= listing.title %></b><br>
-                    &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : "Price not available" %> /night
-                    <i class="tax-info" style="display: none;">&nbsp; &nbsp; +18% GST</i>
-                </p>
+<!-- Main Listings Grid -->
+<div class="container-fluid px-lg-4 mt-2 mb-5">
+  <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+      <div>
+        <h3 class="fw-bold mb-1">Search results for "<span class="text-danger"><%= searchQuery %></span>"</h3>
+        <p class="text-muted small mb-0">Showing available properties matching your criteria</p>
+      </div>
+      <a href="/listings" class="btn btn-outline-dark rounded-pill px-4 py-2 fs-6 fw-semibold">
+        <i class="fa-solid fa-xmark me-1"></i> Clear Search
+      </a>
+    </div>
+  <% } %>
+
+  <% if(allListings && allListings.length > 0) { %>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="listingsContainer">
+      <% for(let listing of allListings) { %>
+      <div class="col">
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+          <div class="listing-card">
+            <div class="card-img-container">
+              <img 
+                src="<%= (listing.image && listing.image.url) ? listing.image.url : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80' %>" 
+                alt="<%= listing.title %>"
+                loading="lazy"
+              >
+              <span class="card-badge">
+                <i class="fa-solid fa-star text-warning me-1"></i> 4.9 &bull; Verified
+              </span>
+              <button 
+                class="wishlist-btn" 
+                onclick="event.preventDefault(); this.classList.toggle('active');" 
+                title="Save to Wishlist"
+                aria-label="Save to Wishlist"
+              >
+                <i class="fa-solid fa-heart"></i>
+              </button>
             </div>
+            <div class="card-body-custom">
+              <h5 class="card-title-custom"><%= listing.title %></h5>
+              <div class="card-location-custom">
+                <i class="fa-solid fa-location-dot text-danger"></i>
+                <%= listing.location %>, <%= listing.country %>
+              </div>
+              <div class="card-price-custom">
+                &#8377; <%= listing.price != null ? listing.price.toLocaleString("en-IN") : "N/A" %> 
+                <span>/ night</span>
+                <span class="tax-info tax-badge" style="display: none;">+18% GST</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <% } %>
+    </div>
+  <% } else { %>
+    <!-- Empty State -->
+    <div class="card border-0 shadow-sm p-5 text-center my-4" style="border-radius: var(--radius-xl); background: var(--bg-surface);">
+      <div class="py-4">
+        <div class="d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger rounded-circle p-4 mb-3">
+          <i class="fa-solid fa-compass-slash fs-1"></i>
         </div>
-    </a>
-    <% } %>
+        <h3 class="fw-bold mb-2">No Stays Found</h3>
+        <p class="text-muted mx-auto" style="max-width: 460px;">
+          We couldn't find any stays matching your search. Try searching for a different destination or explore all our luxury properties.
+        </p>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <a href="/listings" class="btn btn-auth-primary rounded-pill px-4 py-2">
+            <i class="fa-solid fa-globe me-2"></i> Explore All Stays
+          </a>
+        </div>
+      </div>
+    </div>
+  <% } %>
 </div>
 
 <script>
-    let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  document.addEventListener("DOMContentLoaded", function() {
+    // Tax toggle switch listener
+    const taxSwitch = document.getElementById("flexSwitchCheckDefault");
     if (taxSwitch) {
-        taxSwitch.addEventListener("click", () => {
-            let taxInfo = document.getElementsByClassName("tax-info");
-            for (let info of taxInfo) {
-                if (info.style.display !== "inline") {
-                    info.style.display = "inline";
-                } else {
-                    info.style.display = "none";
-                }    
-            } 
-        });
+      taxSwitch.addEventListener("change", () => {
+        const taxInfo = document.getElementsByClassName("tax-info");
+        for (let info of taxInfo) {
+          info.style.display = taxSwitch.checked ? "inline-block" : "none";
+        }
+      });
     }
-</script>
+
+    // Category filter active state toggling
+    const filterItems = document.querySelectorAll('.filter-item');
+    filterItems.forEach(item => {
+      item.addEventListener('click', function() {
+        filterItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  });
+</script>

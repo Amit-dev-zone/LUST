@@ -1,43 +1,79 @@
 <% layout('/layouts/boilerplate') -%>
-<div class="row mt-3">
-    <div class="col-8 offset-2">
-    <h3>Create a new listing</h3>
-    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control" required>
-        <div class="valid-feedback">Title Looks Good!</div>
+
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12 col-md-10 col-lg-8 mx-auto">
+      <div class="form-card">
+        <div class="text-center mb-4">
+          <div class="d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger rounded-circle p-3 mb-3">
+            <i class="fa-solid fa-house-chimney fs-2"></i>
+          </div>
+          <h2 class="form-header-title">Create a New Listing</h2>
+          <p class="form-header-subtitle">Share your space with millions of travelers around the globe</p>
         </div>
-        
-        <div class="mb-3">
+
+        <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="title" class="form-label">Property Title</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-heading"></i></span>
+              <input name="listing[title]" id="title" placeholder="e.g. Luxury Beachfront Villa in Goa" type="text" class="form-control" required>
+            </div>
+            <div class="valid-feedback">Title looks great!</div>
+            <div class="invalid-feedback">Please enter a catchy title.</div>
+          </div>
+          
+          <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea name="listing[description]" class="form-control" required></textarea>
-        <div class="invalid-feedback">Please enter a short description.</div>
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Upload Image</label>
-            <input name="listing[image]" class="form-control" type="file" required>
-        </div>
-        <div class="row">
-        <div class="mb-3 col-md-4">
-        <label for="price" class="form-label">Price</label>
-        <input name="listing[price]" placeholder="1200"  class="form-control" required >
-        <div class="invalid-feedback">Please enter a valid price.</div>
-        </div>
-        
-        <div class="mb-3 col-md-8">
-        <label for="country" class="form-label">Country</label>
-        <input name="listing[country]" placeholder="India" type="text" class="form-control" required>
-        <div class="invalid-feedback">Country should be valid</div> 
-        </div>
-        </div>
-        <div class="mb-3">
-        <label for="location" class="form-label">Location </label>
-        <input name="listing[location]" placeholder="Enter location" type="text" class="form-control" required >
-        <div class="invalid-feedback">Location should be valid</div>
-        </div>
-        <button class="btn btn-dark add-btn">Add To List</button>
-        <br><br><br>
-    </form>
+            <textarea name="listing[description]" id="description" class="form-control" rows="4" placeholder="Describe the ambiance, amenities, view, and unique features of your stay..." required></textarea>
+            <div class="invalid-feedback">Please enter a short description.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="image" class="form-label">Upload High-Res Cover Image</label>
+            <div class="custom-dropzone mb-2" onclick="document.getElementById('image').click();">
+              <i class="fa-solid fa-cloud-arrow-up text-danger fs-1 mb-2"></i>
+              <h6 class="fw-bold mb-1">Click to select photo</h6>
+              <p class="text-muted small mb-0">High-resolution PNG, JPG, or WEBP (Max 10MB)</p>
+            </div>
+            <input name="listing[image]" id="image" class="form-control d-none" type="file" required onchange="if(this.files[0]) alert('File selected: ' + this.files[0].name);">
+            <div class="invalid-feedback">Please upload an image file.</div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-md-5">
+              <label for="price" class="form-label">Price per Night (&#8377;)</label>
+              <div class="input-group">
+                <span class="input-group-text">&#8377;</span>
+                <input name="listing[price]" id="price" placeholder="2500" type="number" class="form-control" min="0" required>
+              </div>
+              <div class="invalid-feedback">Please enter a valid price per night.</div>
+            </div>
+            
+            <div class="mb-3 col-md-7">
+              <label for="country" class="form-label">Country</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-earth-americas"></i></span>
+                <input name="listing[country]" id="country" placeholder="e.g. India" type="text" class="form-control" required>
+              </div>
+              <div class="invalid-feedback">Please enter a valid country name.</div> 
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="location" class="form-label">City / Location</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+              <input name="listing[location]" id="location" placeholder="e.g. Anjuna, Goa" type="text" class="form-control" required>
+            </div>
+            <div class="invalid-feedback">Please enter a valid location.</div>
+          </div>
+
+          <button class="btn btn-form-submit py-3">
+            <i class="fa-solid fa-paper-plane me-2"></i> Publish Listing Now
+          </button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

@@ -1,15 +1,83 @@
+<footer class="footer-custom">
+  <div class="container px-lg-4">
+    <div class="row g-4 mb-4">
+      <!-- Column 1: Brand & Tagline -->
+      <div class="col-12 col-md-4">
+        <div class="footer-brand">
+          <i class="fa-regular fa-compass text-danger"></i>
+          <span>Wanderlust</span>
+        </div>
+        <p class="small text-muted mb-3 me-lg-4" style="line-height: 1.6;">
+          Discover extraordinary stays, luxury beachfront villas, cozy mountain cabins, and unique experiences around the world.
+        </p>
+        <div class="d-flex align-items-center gap-2">
+          <a href="#" class="footer-social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="footer-social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="footer-social-icon" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="footer-social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
 
-<footer>
-    <div class="f-info">
-        <div class="f-info-socials">
-            <i class="fa-brands fa-square-facebook"></i>
-            <i class="fa-brands fa-square-instagram"></i>
-            <i class="fa-brands fa-square-linkedin"></i>
+      <!-- Column 2: Explore Stays -->
+      <div class="col-6 col-md-2">
+        <h6 class="footer-title">Explore Stays</h6>
+        <ul class="footer-links-list">
+          <li><a href="/listings" class="footer-link">Trending Stays</a></li>
+          <li><a href="/listings?q=Beach" class="footer-link">Beachfront Villas</a></li>
+          <li><a href="/listings?q=Mountain" class="footer-link">Mountain Cabins</a></li>
+          <li><a href="/listings?q=City" class="footer-link">Iconic Cities</a></li>
+          <li><a href="/listings?q=Pool" class="footer-link">Luxury Pools</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Hosting & Community -->
+      <div class="col-6 col-md-2">
+        <h6 class="footer-title">Hosting</h6>
+        <ul class="footer-links-list">
+          <li><a href="/listings/new" class="footer-link">Host Your Home</a></li>
+          <li><a href="#" class="footer-link">Host Cover Protection</a></li>
+          <li><a href="#" class="footer-link">Hosting Resources</a></li>
+          <li><a href="#" class="footer-link">Community Forum</a></li>
+          <li><a href="#" class="footer-link">Responsible Hosting</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Newsletter -->
+      <div class="col-12 col-md-4">
+        <h6 class="footer-title">Stay Updated</h6>
+        <p class="small text-muted mb-3">Subscribe to get secret travel deals, new listings, and curated destination guides.</p>
+        <form class="mb-3" onsubmit="event.preventDefault(); alert('Thank you for subscribing to Wanderlust!');">
+          <div class="input-group">
+            <input type="email" class="form-control newsletter-inp" placeholder="Enter your email address" aria-label="Your email" required>
+            <button class="btn btn-newsletter" type="submit">Subscribe</button>
+          </div>
+        </form>
+        <div class="d-flex align-items-center gap-2 text-muted small">
+          <i class="fa-solid fa-shield-halved text-success"></i> 100% Spam-free. Unsubscribe anytime.
         </div>
-        <div class="f-info-brand">&copy; Wanderlust Private Limited</div>
-        <div class="f-info-links">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
-        </div>
+      </div>
     </div>
+
+    <!-- Footer Bottom Line -->
+    <div class="footer-bottom">
+      <div class="row align-items-center justify-content-between g-3">
+        <div class="col-12 col-md-6 text-center text-md-start">
+          <p class="small text-muted mb-0">
+            &copy; <%= new Date().getFullYear() %> Wanderlust, Inc. All rights reserved. Built with passion for world travelers.
+          </p>
+        </div>
+        <div class="col-12 col-md-6 text-center text-md-end">
+          <div class="d-inline-flex align-items-center gap-3">
+            <a href="/privacy" class="footer-link">Privacy Policy</a>
+            <span class="text-muted">&bull;</span>
+            <a href="/terms" class="footer-link">Terms & Conditions</a>
+            <span class="text-muted">&bull;</span>
+            <span class="badge bg-dark border border-secondary text-light py-2 px-3 rounded-pill fw-semibold">
+              <i class="fa-solid fa-globe text-danger me-1"></i> English (IN) &bull; INR (&#8377;)
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>
