@@ -1,40 +1,78 @@
 <% layout('/layouts/boilerplate') -%>
 
-<!-- Hero Section (Shown on default index view) -->
+<!-- Hero Section (Conversion Focused) -->
 <% if (typeof searchQuery === 'undefined' || !searchQuery) { %>
 <div class="container-fluid px-lg-4 mt-2">
   <div class="hero-wrapper">
     <div class="hero-bg-glow"></div>
-    <div class="hero-bg-glow-2"></div>
-    <div class="row align-items-center">
-      <div class="col-12 col-lg-8">
-        <div class="hero-badge">
-          <i class="fa-solid fa-sparkles text-warning"></i> Over 10,000+ Verified Stays Worldwide
+    <div class="row align-items-center g-4">
+      <div class="col-12 col-lg-6">
+        <div class="hero-value-chips">
+          <span class="hero-value-chip"><i class="fa-solid fa-circle-check text-success"></i> 100% Verified Hosts</span>
+          <span class="hero-value-chip"><i class="fa-solid fa-arrow-rotate-left text-info"></i> Flexible Cancellation</span>
+          <span class="hero-value-chip"><i class="fa-solid fa-shield-halved text-warning"></i> Zero Hidden Fees</span>
         </div>
+        
         <h1 class="hero-title">
-          Find Your Next <span class="text-gradient">Dream Stay</span> & Unique Experience
+          Find <span class="text-gradient">Unique Stays</span>,<br>Not Just Hotels
         </h1>
         <p class="hero-subtitle">
-          Explore luxury villas, cozy beachfront cottages, iconic city apartments, and hidden nature retreats carefully curated for unforgettable memories.
+          Discover luxury beachfront villas, rustic mountain cabins, treehouses, and iconic city lofts verified for quality and comfort.
         </p>
 
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number">10K+</span>
-            <span class="stat-label">Verified Stays</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">4.9/5</span>
-            <span class="stat-label">Guest Rating</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">120+</span>
-            <span class="stat-label">Countries</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">24/7</span>
-            <span class="stat-label">Host Support</span>
-          </div>
+        <div class="d-none d-lg-flex align-items-center gap-4 text-light opacity-75 small">
+          <div><i class="fa-solid fa-star text-warning me-1"></i> <strong>4.9/5</strong> Rating</div>
+          <div><i class="fa-solid fa-house-user text-danger me-1"></i> <strong>10,000+</strong> Stays</div>
+          <div><i class="fa-solid fa-earth-americas text-primary me-1"></i> <strong>120+</strong> Countries</div>
+        </div>
+      </div>
+
+      <!-- Embedded Hero Search Card -->
+      <div class="col-12 col-lg-6">
+        <div class="hero-search-card">
+          <h5 class="fw-bold mb-3"><i class="fa-solid fa-magnifying-glass text-danger me-2"></i> Where would you like to go?</h5>
+          <form action="/listings" method="GET">
+            <div class="row g-2">
+              <div class="col-12">
+                <div class="hero-search-item bg-light border rounded-3">
+                  <label class="hero-search-label" for="heroLocation"><i class="fa-solid fa-location-dot text-danger me-1"></i> Destination</label>
+                  <input type="text" name="q" id="heroLocation" class="hero-search-input" placeholder="Malibu, Goa, Tokyo, Aspen..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="hero-search-item bg-light border rounded-3">
+                  <label class="hero-search-label" for="checkInDate"><i class="fa-regular fa-calendar me-1"></i> Check-in</label>
+                  <input type="date" id="checkInDate" class="hero-search-input">
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="hero-search-item bg-light border rounded-3">
+                  <label class="hero-search-label" for="checkOutDate"><i class="fa-regular fa-calendar-check me-1"></i> Check-out</label>
+                  <input type="date" id="checkOutDate" class="hero-search-input">
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="hero-search-item bg-light border rounded-3">
+                  <label class="hero-search-label" for="guestCount"><i class="fa-solid fa-user-group me-1"></i> Guests</label>
+                  <select id="guestCount" class="hero-search-input">
+                    <option value="1">1 Guest</option>
+                    <option value="2" selected>2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4+ Guests</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-hero-search">
+                  <i class="fa-solid fa-magnifying-glass"></i> Start Searching Stays
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -42,7 +80,7 @@
 </div>
 <% } %>
 
-<!-- Category Filters Carousel Bar -->
+<!-- Category Filters Bar & Filter Trigger -->
 <div class="container-fluid px-lg-4">
   <div class="filters-wrapper">
     <div class="filters-container">
@@ -93,10 +131,17 @@
         </div>
       </div>
 
-      <div class="tax-toggle-pill ms-auto">
-        <div class="form-check form-switch m-0 d-flex align-items-center gap-2">
-          <input class="form-check-input mt-0" type="checkbox" id="flexSwitchCheckDefault" role="switch">
-          <label class="form-check-label user-select-none" for="flexSwitchCheckDefault">Display total before taxes</label>
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <button class="btn-filter-trigger" data-bs-toggle="modal" data-bs-target="#filterModal" title="Filter listings">
+          <i class="fa-solid fa-sliders text-danger"></i>
+          <span class="d-none d-sm-inline">Filters</span>
+        </button>
+
+        <div class="tax-toggle-pill">
+          <div class="form-check form-switch m-0 d-flex align-items-center gap-2">
+            <input class="form-check-input mt-0" type="checkbox" id="flexSwitchCheckDefault" role="switch">
+            <label class="form-check-label user-select-none d-none d-md-inline" for="flexSwitchCheckDefault">Display total before taxes</label>
+          </div>
         </div>
       </div>
     </div>
@@ -120,41 +165,61 @@
   <% if(allListings && allListings.length > 0) { %>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="listingsContainer">
       <% for(let listing of allListings) { %>
-      <div class="col">
-        <a href="/listings/<%= listing._id %>" class="listing-link">
-          <div class="listing-card">
-            <div class="card-img-container">
+      <div class="col listing-grid-item" data-price="<%= listing.price != null ? listing.price : 0 %>">
+        <div class="listing-card">
+          <div class="card-img-container">
+            <a href="/listings/<%= listing._id %>" class="d-block w-100 h-100">
               <img 
                 src="<%= (listing.image && listing.image.url) ? listing.image.url : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80' %>" 
                 alt="<%= listing.title %>"
                 loading="lazy"
               >
-              <span class="card-badge">
-                <i class="fa-solid fa-star text-warning me-1"></i> 4.9 &bull; Verified
-              </span>
-              <button 
-                class="wishlist-btn" 
-                onclick="event.preventDefault(); this.classList.toggle('active');" 
-                title="Save to Wishlist"
-                aria-label="Save to Wishlist"
-              >
-                <i class="fa-solid fa-heart"></i>
-              </button>
+            </a>
+            <span class="card-badge">
+              <i class="fa-solid fa-star text-warning me-1"></i> 4.9 &bull; Verified
+            </span>
+            <button 
+              class="wishlist-btn" 
+              data-listing-id="<%= listing._id %>"
+              onclick="event.preventDefault(); window.toggleWishlist('<%= listing._id %>', this);" 
+              title="Save to Wishlist"
+              aria-label="Save to Wishlist"
+            >
+              <i class="fa-solid fa-heart"></i>
+            </button>
+          </div>
+          <div class="card-body-custom">
+            <h5 class="card-title-custom"><a href="/listings/<%= listing._id %>"><%= listing.title %></a></h5>
+            <div class="card-location-custom">
+              <i class="fa-solid fa-location-dot text-danger"></i>
+              <%= listing.location %>, <%= listing.country %>
             </div>
-            <div class="card-body-custom">
-              <h5 class="card-title-custom"><%= listing.title %></h5>
-              <div class="card-location-custom">
-                <i class="fa-solid fa-location-dot text-danger"></i>
-                <%= listing.location %>, <%= listing.country %>
-              </div>
-              <div class="card-price-custom">
-                &#8377; <%= listing.price != null ? listing.price.toLocaleString("en-IN") : "N/A" %> 
-                <span>/ night</span>
-                <span class="tax-info tax-badge" style="display: none;">+18% GST</span>
-              </div>
+
+            <!-- Key Amenities Icons -->
+            <div class="card-amenities" title="Featured amenities">
+              <span class="amenity-icon-pill" title="High-Speed Wi-Fi"><i class="fa-solid fa-wifi"></i></span>
+              <span class="amenity-icon-pill" title="Swimming Pool"><i class="fa-solid fa-water-ladder"></i></span>
+              <span class="amenity-icon-pill" title="Air Conditioning"><i class="fa-solid fa-snowflake"></i></span>
+              <span class="amenity-icon-pill" title="Pet Friendly"><i class="fa-solid fa-paw"></i></span>
+            </div>
+
+            <div class="card-price-custom">
+              &#8377; <%= listing.price != null ? listing.price.toLocaleString("en-IN") : "N/A" %> 
+              <span>/ night</span>
+              <span class="tax-info tax-badge" style="display: none;">+18% GST</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="card-action-bar">
+              <a href="/listings/<%= listing._id %>" class="btn-card-details">
+                <i class="fa-solid fa-eye me-1"></i> Details
+              </a>
+              <a href="/listings/<%= listing._id %>" class="btn-card-book">
+                <i class="fa-solid fa-calendar-check me-1"></i> Book Now
+              </a>
             </div>
           </div>
-        </a>
+        </div>
       </div>
       <% } %>
     </div>
@@ -177,6 +242,94 @@
       </div>
     </div>
   <% } %>
+</div>
+
+<!-- Sticky Mobile Search Trigger Bar (Mobile Only) -->
+<button class="mobile-sticky-search d-block d-md-none" data-bs-toggle="modal" data-bs-target="#filterModal">
+  <i class="fa-solid fa-magnifying-glass text-danger"></i>
+  <span>Search & Filter Stays</span>
+</button>
+
+<!-- Filter Modal Dialog -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="border-radius: var(--radius-xl); border: none;">
+      <div class="modal-header border-bottom px-4">
+        <h5 class="modal-title fw-bold" id="filterModalLabel">
+          <i class="fa-solid fa-sliders text-danger me-2"></i> Filter Stays & Amenities
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <!-- Price Range Slider -->
+        <div class="mb-4">
+          <label class="fw-bold text-dark mb-2 d-flex justify-content-between">
+            <span>Price Range (per night)</span>
+            <span class="text-danger fw-bold" id="priceRangeValue">Up to &#8377;10,000</span>
+          </label>
+          <input type="range" class="form-range" id="priceFilterSlider" min="500" max="10000" step="500" value="10000">
+        </div>
+
+        <hr class="my-4 text-muted opacity-25">
+
+        <!-- Amenities Checkboxes -->
+        <div class="mb-4">
+          <label class="fw-bold text-dark mb-3 d-block">Key Amenities</label>
+          <div class="d-flex flex-wrap gap-2">
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="wifi" class="amenity-filter-check">
+              <i class="fa-solid fa-wifi"></i> High-Speed Wi-Fi
+            </label>
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="pool" class="amenity-filter-check">
+              <i class="fa-solid fa-water-ladder"></i> Swimming Pool
+            </label>
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="ac" class="amenity-filter-check">
+              <i class="fa-solid fa-snowflake"></i> Air Conditioning
+            </label>
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="pet" class="amenity-filter-check">
+              <i class="fa-solid fa-paw"></i> Pet-Friendly
+            </label>
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="parking" class="amenity-filter-check">
+              <i class="fa-solid fa-square-parking"></i> Free Parking
+            </label>
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="kitchen" class="amenity-filter-check">
+              <i class="fa-solid fa-kitchen-set"></i> Kitchen
+            </label>
+          </div>
+        </div>
+
+        <hr class="my-4 text-muted opacity-25">
+
+        <!-- Property Types -->
+        <div class="mb-3">
+          <label class="fw-bold text-dark mb-3 d-block">Property Type</label>
+          <div class="d-flex flex-wrap gap-2">
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="villa"> Villa
+            </label>
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="apartment"> Apartment
+            </label>
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="cabin"> Cabin
+            </label>
+            <label class="amenity-check-chip">
+              <input type="checkbox" value="castle"> Castle
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top px-4 py-3">
+        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" id="resetFiltersBtn">Reset All</button>
+        <button type="button" class="btn btn-auth-primary rounded-pill px-4" data-bs-dismiss="modal" id="applyFiltersBtn">Apply Filters</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
